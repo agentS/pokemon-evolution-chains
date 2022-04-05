@@ -1,4 +1,4 @@
-import { Component, h, State } from "@stencil/core";
+import { Component, Fragment, h, State } from "@stencil/core";
 import { store } from "@stencil/redux";
 import { IEvolutionChain } from "pokeapi-typescript";
 
@@ -27,27 +27,50 @@ export class PokemonEvolutionChain {
 			return (
 				<div>
 					<h3>Evolution Chain</h3>
-					<h5>{this.evolutionChain.chain.species.name}</h5>
-					{
-						this.evolutionChain.chain.evolves_to.length > 0
-						? this.evolutionChain.chain.evolves_to.map(firstEvolution =>
-							<div>
-								<h5>{firstEvolution.species.name}</h5>
-								{ console.log(firstEvolution.evolution_details) }
-								{
-									firstEvolution.evolves_to.length > 0
-									? firstEvolution.evolves_to.map(secondEvolution =>
-										<div>
-											<h5>{secondEvolution.species.name}</h5>
-											{ console.log(secondEvolution.evolution_details) }
+					<div class="evolutionChainContainer">
+						<div>
+							<h5>{this.evolutionChain.chain.species.name}</h5>
+						</div>
+						<div>
+							{
+								this.evolutionChain.chain.evolves_to.length > 0
+								? this.evolutionChain.chain.evolves_to.map((firstEvolution, firstEvolutionIndex) =>
+									<Fragment>
+										<div class="evolutionEntry">
+											<h5>{firstEvolution.species.name}</h5>
+											<pokemon-evolution-details evolutionDetails={firstEvolution.evolution_details} />
 										</div>
-									)
-									: <span></span>
-								}
-							</div>
-						)
-						: <span></span>
-					}
+										{
+											firstEvolutionIndex < (firstEvolution.evolves_to.length - 1)
+											? <div class="evolutionEntry"></div>
+											: <Fragment></Fragment>
+										}
+									</Fragment>
+								)
+								: <Fragment></Fragment>
+							}
+						</div>
+						<div>
+							{
+								this.evolutionChain.chain.evolves_to.length > 0
+								? this.evolutionChain.chain.evolves_to.map(firstEvolution =>
+									<Fragment>
+										{
+											firstEvolution.evolves_to.length > 0
+											? firstEvolution.evolves_to.map(secondEvolution =>
+												<div class="evolutionEntry">
+													<h5>{secondEvolution.species.name}</h5>
+													<pokemon-evolution-details evolutionDetails={secondEvolution.evolution_details} />
+												</div>
+											)
+											: <Fragment></Fragment>
+										}
+									</Fragment>
+								)
+								: <Fragment></Fragment>
+							}
+						</div>
+					</div>
 				</div>
 			);
 		} else {
