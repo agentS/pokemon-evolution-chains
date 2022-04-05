@@ -14,6 +14,10 @@ export namespace Components {
     }
     interface AppRoot {
     }
+    interface PokemonDetails {
+    }
+    interface PokemonEvolutionChain {
+    }
     interface PokemonSearch {
     }
 }
@@ -36,6 +40,18 @@ declare global {
         prototype: HTMLAppRootElement;
         new (): HTMLAppRootElement;
     };
+    interface HTMLPokemonDetailsElement extends Components.PokemonDetails, HTMLStencilElement {
+    }
+    var HTMLPokemonDetailsElement: {
+        prototype: HTMLPokemonDetailsElement;
+        new (): HTMLPokemonDetailsElement;
+    };
+    interface HTMLPokemonEvolutionChainElement extends Components.PokemonEvolutionChain, HTMLStencilElement {
+    }
+    var HTMLPokemonEvolutionChainElement: {
+        prototype: HTMLPokemonEvolutionChainElement;
+        new (): HTMLPokemonEvolutionChainElement;
+    };
     interface HTMLPokemonSearchElement extends Components.PokemonSearch, HTMLStencilElement {
     }
     var HTMLPokemonSearchElement: {
@@ -46,6 +62,8 @@ declare global {
         "app-home": HTMLAppHomeElement;
         "app-profile": HTMLAppProfileElement;
         "app-root": HTMLAppRootElement;
+        "pokemon-details": HTMLPokemonDetailsElement;
+        "pokemon-evolution-chain": HTMLPokemonEvolutionChainElement;
         "pokemon-search": HTMLPokemonSearchElement;
     }
 }
@@ -57,12 +75,18 @@ declare namespace LocalJSX {
     }
     interface AppRoot {
     }
+    interface PokemonDetails {
+    }
+    interface PokemonEvolutionChain {
+    }
     interface PokemonSearch {
     }
     interface IntrinsicElements {
         "app-home": AppHome;
         "app-profile": AppProfile;
         "app-root": AppRoot;
+        "pokemon-details": PokemonDetails;
+        "pokemon-evolution-chain": PokemonEvolutionChain;
         "pokemon-search": PokemonSearch;
     }
 }
@@ -73,6 +97,8 @@ declare module "@stencil/core" {
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            "pokemon-details": LocalJSX.PokemonDetails & JSXBase.HTMLAttributes<HTMLPokemonDetailsElement>;
+            "pokemon-evolution-chain": LocalJSX.PokemonEvolutionChain & JSXBase.HTMLAttributes<HTMLPokemonEvolutionChainElement>;
             "pokemon-search": LocalJSX.PokemonSearch & JSXBase.HTMLAttributes<HTMLPokemonSearchElement>;
         }
     }

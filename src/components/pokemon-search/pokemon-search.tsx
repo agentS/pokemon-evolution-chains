@@ -1,9 +1,10 @@
 import { Component, h, State } from "@stencil/core";
 import { store } from "@stencil/redux";
-import { SearchActions, searchTextChanged, SearchTextChangedAction } from "../../redux/search/SearchActions";
+import { searchTextChanged, lookupEvolutionChain } from "../../redux/search/SearchActions";
 
 @Component({
-	tag: "pokemon-search"
+	tag: "pokemon-search",
+	shadow: true,
 })
 export class PokemonSearch {
 	@State() searchTerm: string;
@@ -18,7 +19,8 @@ export class PokemonSearch {
 			};
 		});
 		store.mapDispatchToProps(this, {
-			searchTextChanged
+			searchTextChanged,
+			lookupPokemon: lookupEvolutionChain
 		});
 	}
 
@@ -35,13 +37,15 @@ export class PokemonSearch {
 
 	handleSearchTermChanged(event: Event) {
 		const newSearchTerm = (event.target as HTMLInputElement).value;
-		this.searchTextChanged({ newText: newSearchTerm, type: SearchActions.TEXT_CHANGED });
+		this.searchTextChanged(newSearchTerm);
 	}
+
+	searchTextChanged: (newSearchTerm: string) => void;
 
 	handleLookupEvolutionChain(event: Event) {
 		event.preventDefault();
-		
+		this.lookupPokemon();
 	}
 
-	searchTextChanged: (data: SearchTextChangedAction) => void;
+	lookupPokemon: () => void;
 }
